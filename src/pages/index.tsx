@@ -60,7 +60,7 @@ export default function Home() {
       <Card>
         <CardContent>
           <h2 className="text-xl font-semibold mb-4">Which theory is associated with:</h2>
-          <div className="text-2xl font-bold mb-6">&quot;{question.term}&quot;</div>
+          <div className="text-2xl font-bold mb-6">{question.term}</div>
           <div className="space-y-2">
             {question.options.map((opt) => (
               <Button
