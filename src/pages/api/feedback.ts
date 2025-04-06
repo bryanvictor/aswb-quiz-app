@@ -23,8 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const feedback = completion.choices[0].message.content;
     res.status(200).json({ feedback });
-  } catch (error) {
-    console.error("OpenAI API error:", error);
+  } catch (error: any) {
+    console.error("OpenAI API error:", error.response?.data || error.message || error);
     res.status(500).json({ feedback: "Sorry, there was a problem generating feedback." });
   }
 }
