@@ -17,14 +17,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
     });
 
     const feedback = completion.choices[0].message.content;
     res.status(200).json({ feedback });
-  } catch (error: any) {
-    console.error("OpenAI API error:", error.response?.data || error.message || error);
+  } catch (error) {
+    const err = error as { response?: { data?: unknown }; message?: string };
+    console.error("OpenAI API error:", err.response?.data || err.message || err);
     res.status(500).json({ feedback: "Sorry, there was a problem generating feedback." });
   }
 }
+
