@@ -23,10 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const feedback = completion.choices[0].message.content;
     res.status(200).json({ feedback });
   } catch (error) {
-    const err = error as { response?: { data?: any }; message?: string };
+    const err = error as { response?: { data?: unknown }; message?: string };
     console.error("OpenAI API error:", err.response?.data || err.message || err);
 
-    // Show raw error message in development only
     const showDebug = process.env.NODE_ENV !== 'production';
     res.status(500).json({
       feedback: showDebug ? `DEBUG: ${JSON.stringify(err.response?.data || err.message)}` : "Sorry, there was a problem generating feedback."
