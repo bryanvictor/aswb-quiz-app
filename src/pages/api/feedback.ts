@@ -26,9 +26,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const err = error as { response?: { data?: unknown }; message?: string };
     console.error("OpenAI API error:", err.response?.data || err.message || err);
 
-    const showDebug = process.env.NODE_ENV !== 'production';
+    // TEMP: Always return debug message for troubleshooting
     res.status(500).json({
-      feedback: showDebug ? `DEBUG: ${JSON.stringify(err.response?.data || err.message)}` : "Sorry, there was a problem generating feedback."
+      feedback: `DEBUG: ${JSON.stringify(err.response?.data || err.message)}`
     });
   }
 }
