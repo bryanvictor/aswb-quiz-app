@@ -40,17 +40,22 @@ export default function Home() {
   const checkAnswer = async (choice: string) => {
     if (!question) return;
     setSelected(choice);
-    const res = await fetch("/api/feedback", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        term: question.term,
-        selectedTheory: choice,
-        correctTheory: question.theory,
-      }),
-    });
-    const data = await res.json();
-    setFeedback(data.feedback);
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          term: question.term,
+          selectedTheory: choice,
+          correctTheory: question.theory,
+        }),
+      });
+      const data = await res.json();
+      setFeedback(data.feedback);
+    } catch (error) {
+      console.error("Client fetch error:", error);
+      setFeedback("Something went wrong — please try again.");
+    }
   };
 
   if (!question) return <div className="p-4">Loading...</div>;
